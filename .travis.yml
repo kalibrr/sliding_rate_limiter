@@ -1,0 +1,18 @@
+language: python
+python:
+- 3.6
+- 3.5
+- 3.4
+- 2.7
+install: pip install -U tox-travis
+script: tox
+deploy:
+  provider: pypi
+  distributions: sdist bdist_wheel
+  user: kalibrr
+  password:
+    secure: i+rOur7db2pxwGSh7NmzM3Ns/KIY16bs0uctC5D09RebUV5qhQ5GJq2W2sKwSTSpciLnqEUi12ZtyWFS412HDnR5GUnvunulYCF7It6GfHuNLwi12U3nQ/H/DVHQ+X0QF7nIsU0/vUI/I1IKXtB2QbmzKrr/5E+licDcxsNc7c9JcyoWgJaf5iYjyF6M/k1hsOiJnzKJ154loq1rvQIQmSew8LlRnpkXojwJ4yTuVZ5tyrra+yjqfl/zz6TsomlCXfNAaViG2R0qRGvnRHXiwG2t7a/u26Wz80Wbrt6QHRkmDKvB+xf3y+M3o0qAERG00kgQI2Diko2cGuIN9k1G1g1i0sAAl8Xb8/u/XAfs0SazI9RJzQ6ZAdBqdw0O7vnqJ3AGycYohqxOFa2YzjpRTwFW9GsffNVJ9qWoSfMZivodxNIkJpWm3hG3eidvfwe48qkCxsFcH/nQoUYABM2ntw9ESsdSz2k2O3mdmHUicsvow8R/ijtUR1Q5qNYNO3mofGAlu+yvAtSaLbI5jLhRM6lxl3olpeqtYbOh+jVaaIYllRMR0e39Qvscc91oXxQOJS+VK5o6HrjaeG9aLHw/xzBxsgm53zyxnB9UBMSz2nxZNmT3dIVA+lSm/KtUtUsjFhwlNIK+utCpMuyw1s7WT3ZybmdBKpP7rb8N3LrBQC0=
+  on:
+    tags: true
+    repo: kalibrr/sliding_rate_limiter
+    python: 3.6
