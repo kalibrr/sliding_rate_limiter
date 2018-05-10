@@ -39,7 +39,7 @@ setup(
     include_package_data=True,
     keywords='sliding_rate_limiter',
     name='sliding_rate_limiter',
-    packages=find_packages(include=['sliding_rate_limiter']),
+    packages=find_packages(include=['sliding_rate_limiter', 'sliding_rate_limiter.backends']),
     setup_requires=setup_requirements,
     extras_requires={
         'redis': ['redis', ]
