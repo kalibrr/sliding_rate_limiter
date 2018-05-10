@@ -10,7 +10,7 @@ import inspect
 import six
 
 
-def function_key_generator(fn, namespace=None, to_str=six.text_type):
+def function_key_generator(fn, namespace=None, to_str=six.text_type, partial_key_generator=None):
     """
     Return a function that generates a string
     key, based on a given function as well as
@@ -26,6 +26,8 @@ def function_key_generator(fn, namespace=None, to_str=six.text_type):
     has_self = args[0] and args[0][0] in ('self', 'cls')
 
     def generate_key(*args, **kw):
+        if partial_key_generator is not None:
+            return namespace + "|" + partial_key_generator(*args, **kw)
         if kw:
             raise ValueError(
                 "sliding_rate_limiter's default key creation "

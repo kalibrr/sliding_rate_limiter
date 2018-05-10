@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-from __future__ import division
-from __future__ import print_function
-from __future__ import absolute_import
-
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import pytest
+import six
 
-from sliding_rate_limiter.utils import parse_limit, function_key_generator
+from sliding_rate_limiter.utils import function_key_generator, parse_limit
 
 
 def test_function_key_generator():
@@ -20,6 +17,12 @@ def test_function_key_generator():
     key_generator = function_key_generator(logging.config.dictConfig, 'space')
     assert key_generator(1, 'foo') == 'logging.config:dictConfig|space|r|1 foo'
     assert key_generator() == 'logging.config:dictConfig|space|r|'
+    assert key_generator('fooz') == 'logging.config:dictConfig|space|r|fooz'
+
+    key_generator = function_key_generator(
+        logging.config.dictConfig, 'space', partial_key_generator=lambda *args: six.text_type(args[0])
+    )
+    assert key_generator(1, 'foo') == 'logging.config:dictConfig|space|r|1'
     assert key_generator('fooz') == 'logging.config:dictConfig|space|r|fooz'
 
 

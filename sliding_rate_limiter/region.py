@@ -45,13 +45,26 @@ class RateLimiterRegion(six.with_metaclass(abc.ABCMeta, object)):
         limit,
         namespace=None,
         function_key_generator=None,
+        partial_key_generator=None,
         to_str=six.text_type
     ):
+        """
+        :param limit: rate limit as a str (e.g., 5/2s
+        :param namespace: optional additional namespace (in case e.g., there are two functions w/ same name
+            in the same module (e.g., as class methods)
+        :param function_key_generator: takes (fn, namespace, to_str) and returns a function that takes the
+            args & kwargs of a function call and returns the key.
+        :param partial_key_generator: takes the args & kwargs of a function call and
+            returns part of the key (without the namespace). Useful if you want to use the default function
+            key generator but need to use only some of the args & kwargs.
+        :param to_str: used to convert each arg to a string
+        :return: a rate limited function
+        """
         namespace = namespace or self.namespace
         function_key_generator = function_key_generator or self.function_key_generator
 
         def limiter(fn):
-            key_generator = function_key_generator(fn, namespace, to_str=to_str)
+            key_generator = function_key_generator(fn, namespace, to_str, partial_key_generator)
             return functools.wraps(fn)(RateLimitedFunction(
                 fn,
                 limit,
