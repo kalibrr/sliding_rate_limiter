@@ -7,3 +7,4 @@ __email__ = 'hirenow@kalibrr.com'
 __version__ = '1.1.0'
 
 from .rate_limited_function import RateLimitExceededError  # noqa
+from .backends.proxy import UnconfiguredBackendError  # noqa

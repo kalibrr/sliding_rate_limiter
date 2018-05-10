@@ -10,7 +10,7 @@ import six
 import functools
 from sliding_rate_limiter.utils import function_key_generator
 from sliding_rate_limiter.rate_limited_function import RateLimitedFunction
-from sliding_rate_limiter.backends.memory import MemoryBackend
+from sliding_rate_limiter.backends import ProxyBackend
 
 
 class RateLimiterRegion(six.with_metaclass(abc.ABCMeta, object)):
@@ -29,16 +29,16 @@ class RateLimiterRegion(six.with_metaclass(abc.ABCMeta, object)):
     def __init__(
         self,
         name='default',
-        backend=None,
         namespace=None,
         function_key_generator=function_key_generator,
     ):
         self.name = name
         self.namespace = namespace
         self.function_key_generator = function_key_generator
-        if backend is None:
-            backend = MemoryBackend()
-        self.backend = backend
+        self.proxy_backend = ProxyBackend()
+
+    def configure(self, backend):
+        self.proxy_backend.proxy_to(backend)
 
     def rate_limit_with_arguments(
         self,
@@ -56,7 +56,7 @@ class RateLimiterRegion(six.with_metaclass(abc.ABCMeta, object)):
                 fn,
                 limit,
                 key_generator=key_generator,
-                backend=self.backend
+                backend=self.proxy_backend
             ))
 
         return limiter

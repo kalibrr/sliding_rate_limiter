@@ -13,12 +13,13 @@ from sliding_rate_limiter.rate_limited_function import RateLimitExceededError
 
 
 def test_rate_limiter_region():
-    region = RateLimiterRegion('foo', backend=MemoryBackend())
+    region = RateLimiterRegion('foo')
 
     def dummy():
         pass
 
     limited = region.rate_limit_with_arguments('1/s')(dummy)
+    region.configure(MemoryBackend())
     with freeze_time('2000-01-01 00:00:00'):
         limited()
         with pytest.raises(RateLimitExceededError):
