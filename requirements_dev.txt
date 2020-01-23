@@ -12,5 +12,5 @@ twine==1.11.0
 pytest==3.8.0
 pytest-runner==4.2
 
-freezegun==0.3.12
+freezegun==0.3.14
 six==1.11.0
