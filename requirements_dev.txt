@@ -10,7 +10,7 @@ Sphinx==1.8.2
 twine==1.11.0
 
 pytest==3.8.0
-pytest-runner==4.2
+pytest-runner==5.3.1
 
 freezegun==0.3.12
 six==1.11.0
