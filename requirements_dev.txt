@@ -9,7 +9,7 @@ coverage==4.5.1
 Sphinx==1.8.2
 twine==1.11.0
 
-pytest==3.8.0
+pytest==7.2.1
 pytest-runner==4.2
 
 freezegun==0.3.12
